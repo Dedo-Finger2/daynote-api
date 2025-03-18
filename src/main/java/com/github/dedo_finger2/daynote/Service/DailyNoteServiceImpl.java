@@ -43,7 +43,9 @@ public class DailyNoteServiceImpl implements DailyNoteService {
 
     @Override
     public List<Note> getNotesById(Long id) {
-        return List.of();
+        if (!this.dailyNoteRepository.existsById(id)) throw new ResourceNotFound("daily note not found");
+
+        return this.dailyNoteRepository.getNotes(id);
     }
 
     @Override
