@@ -47,7 +47,11 @@ public class DailyNoteServiceImpl implements DailyNoteService {
 
     @Override
     public void deleteById(Long id) {
+        Optional<DailyNote> dailyNote = this.dailyNoteRepository.findById(id);
 
+        if (dailyNote.isEmpty()) throw new ResourceNotFound("daily note not found");
+
+        this.dailyNoteRepository.deleteById(id);
     }
 
     @Override
