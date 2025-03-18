@@ -18,7 +18,7 @@ public class DailyNoteServiceImpl implements DailyNoteService {
 
     @Override
     public List<DailyNote> getAll() {
-        return List.of();
+        return dailyNoteRepository.findAll();
     }
 
     @Override
