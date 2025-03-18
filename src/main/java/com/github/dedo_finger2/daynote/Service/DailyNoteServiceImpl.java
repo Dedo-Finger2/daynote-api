@@ -33,7 +33,11 @@ public class DailyNoteServiceImpl implements DailyNoteService {
 
     @Override
     public Optional<DailyNote> getByTitle(LocalDate title) {
-        return Optional.empty();
+        Optional<DailyNote> dailyNote = this.dailyNoteRepository.findByTitle(title);
+
+        if (dailyNote.isEmpty()) throw new ResourceNotFound("daily note not found");
+
+        return dailyNote;
     }
 
     @Override
