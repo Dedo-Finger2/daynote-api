@@ -3,6 +3,7 @@ package com.github.dedo_finger2.daynote.Service;
 import com.github.dedo_finger2.daynote.Model.DailyNote;
 import com.github.dedo_finger2.daynote.Model.Note;
 import com.github.dedo_finger2.daynote.Repository.DailyNoteRepository;
+import com.github.dedo_finger2.daynote.Service.Exception.ResourceConflict;
 import com.github.dedo_finger2.daynote.Service.Exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,15 @@ public class DailyNoteServiceImpl implements DailyNoteService {
 
     @Override
     public DailyNote create() {
-        return null;
+        LocalDate today = LocalDate.now();
+
+        Optional<DailyNote> existingDailyNote = this.dailyNoteRepository.findByTitle(today);
+
+        if (existingDailyNote.isPresent()) throw new ResourceConflict("today's daily note already exists");
+
+        DailyNote newDailyNote = new DailyNote();
+        newDailyNote.setTitle(today);
+
+        return this.dailyNoteRepository.save(newDailyNote);
     }
 }
