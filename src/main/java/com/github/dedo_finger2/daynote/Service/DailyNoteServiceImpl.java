@@ -3,6 +3,7 @@ package com.github.dedo_finger2.daynote.Service;
 import com.github.dedo_finger2.daynote.Model.DailyNote;
 import com.github.dedo_finger2.daynote.Model.Note;
 import com.github.dedo_finger2.daynote.Repository.DailyNoteRepository;
+import com.github.dedo_finger2.daynote.Service.Exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,11 @@ public class DailyNoteServiceImpl implements DailyNoteService {
 
     @Override
     public Optional<DailyNote> getById(Long id) {
-        return Optional.empty();
+        Optional<DailyNote> dailyNote = this.dailyNoteRepository.findById(id);
+
+        if (dailyNote.isEmpty()) throw new ResourceNotFound("daily note not found");
+
+        return dailyNote;
     }
 
     @Override
