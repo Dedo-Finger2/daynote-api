@@ -13,7 +13,7 @@ public class DailyNoteRepositoryImpl implements DailyNoteRepositoryCustom {
 
     @Override
     public List<Note> getNotes(Long id) {
-        String sql = "select * from notes where daily_note_id = :id";
+        String sql = "select n from Note n where n.dailyNote.id = :id";
 
         final TypedQuery<Note> query = this.entityManager.createQuery(sql, Note.class);
         query.setParameter("id", id);
